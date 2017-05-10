@@ -7,6 +7,8 @@ return array(
       'default' => 
       array(
         0 => '001_create_users',
+        1 => '002_create_posts',
+        2 => '003_create_sensordatas',
       ),
     ),
     'module' => 
