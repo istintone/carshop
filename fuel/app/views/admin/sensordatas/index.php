@@ -7,6 +7,7 @@
 			<th>Sensorid</th>
 			<th>Temperature</th>
 			<th>Humidity</th>
+			<th>SendDate</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -16,6 +17,7 @@
 			<td><?php echo $item->sensorid; ?></td>
 			<td><?php echo $item->temperature; ?></td>
 			<td><?php echo $item->humidity; ?></td>
+			<td><?php echo date("Y/m/d H:i:s", $item->created_at); ?></td>
 			<td>
 				<?php echo Html::anchor('admin/sensordatas/view/'.$item->id, 'View'); ?> |
 				<?php echo Html::anchor('admin/sensordatas/edit/'.$item->id, 'Edit'); ?> |
@@ -25,6 +27,8 @@
 		</tr>
 <?php endforeach; ?>	</tbody>
 </table>
+
+<?php echo Pagination::instance('mypagination')->render(); ?>
 
 <?php else: ?>
 <p>No Sensordatas.</p>

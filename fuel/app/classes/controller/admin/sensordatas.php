@@ -4,7 +4,28 @@ class Controller_Admin_Sensordatas extends Controller_Admin
 
 	public function action_index()
 	{
-		$data['sensordatas'] = Model_Sensordata::find('all');
+
+		$total = count(Model_Sensordata::find('all'));
+
+		$config = array(
+		        'pagination_url' => 'admin/sensordatas/index',
+		        'uri_segment' => 3,
+		        'per_page' => 100,
+		        'total_items' => $total
+		);
+
+		$pagination = Pagination::forge('mypagination', $config);		
+
+		//$data['sensordatas'] = Model_Sensordata::find('all');
+		$data['sensordatas'] = Model_Sensordata::find('all',array(
+						'order_by' => array(
+							'created_at' => 'desc'
+						),
+						'limit' => $pagination->per_page,
+						'offset' => $pagination->offset
+					)
+				);
+
 		$this->template->title = "Sensordatas";
 		$this->template->content = View::forge('admin/sensordatas/index', $data);
 
