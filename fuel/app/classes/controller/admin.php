@@ -94,10 +94,39 @@ class Controller_Admin extends Controller_Base
 	 */
 	public function action_index()
 	{
+
+		$view_data = array();
+
+
+		$view_data['hourly_ave'] = $this->getHourlyData(1);
+		$view_data['hourly_ave_yesterday'] = $this->getHourlyData(2);
+
+
 		$this->template->title = 'Dashboard';
-		$this->template->content = View::forge('admin/dashboard');
+		$this->template->content = View::forge('admin/dashboard',$view_data);
 	}
 
+	
+	private function getHourlyData($hour=1){
+	
+		$min = 60;
+		$start_time = $min * $hour;
+		$end_time = $start_time -59;
+
+		$hourly_average = \Model_Sensordata_Average_Min::find('all', array(
+			"where" => array(
+				array("aggregated_at","between",
+					array(
+						date("Y-m-d H:i:00",strtotime("-{$start_time} minute")),
+						date("Y-m-d H:i:59",strtotime("-{$end_time} minute"))
+					)
+				),
+			),
+			"order_by" => array("aggregated_at" => "desc"),
+		));
+		
+		return $hourly_average;
+	}
 }
 
 /* End of file admin.php */

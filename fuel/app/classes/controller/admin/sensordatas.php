@@ -5,7 +5,7 @@ class Controller_Admin_Sensordatas extends Controller_Admin
 	public function action_index()
 	{
 
-		$total = count(Model_Sensordata::find('all'));
+		$total = Model_Sensordata::count();
 
 		$config = array(
 		        'pagination_url' => 'admin/sensordatas/index',
