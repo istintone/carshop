@@ -19,7 +19,7 @@
 			<td><?php echo $item->humidity; ?>%</td>
 			<td><?php echo date("Y/m/d H:i:s", $item->created_at); ?></td>
 			<td>
-				<?php echo Html::anchor('admin/sensordatas/view/'.$item->id, 'View'); ?> |
+				<?php echo Html::anchor('admin/sensordatas/view/'.$item->id, 'View'); ?> 
 				<!--
 				<?php echo Html::anchor('admin/sensordatas/edit/'.$item->id, 'Edit'); ?> |
 				<?php echo Html::anchor('admin/sensordatas/delete/'.$item->id, 'Delete', array('onclick' => "return confirm('Are you sure?')")); ?>

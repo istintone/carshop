@@ -99,7 +99,7 @@ class Controller_Admin extends Controller_Base
 
 
 		$view_data['hourly_ave'] = $this->getHourlyData(1);
-		$view_data['hourly_ave_yesterday'] = $this->getHourlyData(2);
+		$view_data['hourly_ave_yesterday'] = $this->getHourlyData(24);
 
 
 		$this->template->title = 'Dashboard';

@@ -9,20 +9,32 @@ class Controller_Api extends Controller_Rest
 		$val = Model_Sensordata::validate('create');
 		if ($val->run())
 		{
-			$sensordata = Model_Sensordata::forge(array(
-				'sensorid' => Input::post('sensorid'),
-				'temperature' => Input::post('temperature'),
-				'humidity' => Input::post('humidity'),
-				));
+			//TODO:check sensors exist
 
-			if ($sensordata and $sensordata->save())
+			$data['sensors'] = Model_Sensor::find('all',array(
+				'where' => array(
+						array('sensorid', Input::post('sensorid')),
+						array('use_flg', 1)
+					)
+				));
+			//Log::info(var_dump($data));
+			if(count($data['sensors']))
 			{
-				Session::set_flash('success', e('Added sensordata #'.$sensordata->id.'.'));
-				Response::redirect('admin/sensordatas');
-			}
-			else
-			{
-				Session::set_flash('error', e('Could not save sensordata.'));
+				//TODO: insert mongodb
+				$sensordata = Model_Sensordata::forge(array(
+					'sensorid' => Input::post('sensorid'),
+					'temperature' => Input::post('temperature'),
+					'humidity' => Input::post('humidity'),
+					));
+
+				if ($sensordata and $sensordata->save())
+				{
+					//Session::set_flash('success', e('Added sensordata #'.$sensordata->id.'.'));
+				}
+				else
+				{
+					//Session::set_flash('error', e('Could not save sensordata.'));
+				}
 			}
 		}	
 	}
